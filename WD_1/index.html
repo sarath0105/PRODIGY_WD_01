@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Interactive Navigation Menu</title>
+	<style>
+		.navbar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			background-color: #333;
+			color: #fff;
+			padding: 1em;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.navbar ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+		}
+
+		.navbar li {
+			margin-right: 20px;
+		}
+
+		.navbar a {
+			color: #fff;
+			text-decoration: none;
+			transition: color 0.2s ease;
+		}
+
+		.navbar a:hover {
+			color: #FFFF00;
+		}
+
+		.navbar-scrolled {
+			background-color: #555;
+		}
+
+		.home-page {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.home-page img {
+			width: 50%;
+			height: 50%;
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar">
+		<ul>
+			<li><a href="#home">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</nav>
+
+	<div id="home" class="home-page">
+		<img src="home-image.jpg" alt="Home Image">
+		<h1>Welcome to the Home Page!</h1>
+	</div>
+
+	<script>
+		window.addEventListener('scroll', function() {
+			const navbar = document.querySelector('.navbar');
+			if (window.scrollY > 100) {
+				navbar.classList.add('navbar-scrolled');
+			} else {
+				navbar.classList.remove('navbar-scrolled');
+			}
+		});
+	</script>
+
+	<!-- Add some content to make the page scrollable -->
+	<div style="height: 2000px;"></div>
+</body>
+</html>
