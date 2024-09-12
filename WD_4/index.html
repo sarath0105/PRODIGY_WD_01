@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tic Tac Toe</title>
+	<style>
+		.game-container {
+			width: 300px;
+			margin: 40px auto;
+			text-align: center;
+		}
+
+		.game-board {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		.row {
+			display: flex;
+			justify-content: center;
+		}
+
+		.cell {
+			width: 100px;
+			height: 100px;
+			border: 1px solid #ccc;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 48px;
+			cursor: pointer;
+		}
+
+		.cell:hover {
+			background-color: #f0f0f0;
+		}
+
+		.game-info {
+			margin-top: 20px;
+		}
+
+		#game-status {
+			font-size: 24px;
+			margin-bottom: 10px;
+		}
+
+		#reset-btn {
+			width: 100px;
+			height: 40px;
+			margin: 10px;
+			border: none;
+			border-radius: 10px;
+			background-color: #4CAF50;
+			color: #fff;
+			cursor: pointer;
+		}
+
+		#reset-btn:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+</head>
+<body>
+	<h1>Tic Tac Toe</h1>
+	<div class="game-container">
+		<div class="game-board">
+			<div class="row">
+				<div class="cell" id="cell-0"></div>
+				<div class="cell" id="cell-1"></div>
+				<div class="cell" id="cell-2"></div>
+			</div>
+			<div class="row">
+				<div class="cell" id="cell-3"></div>
+				<div class="cell" id="cell-4"></div>
+				<div class="cell" id="cell-5"></div>
+			</div>
+			<div class="row">
+				<div class="cell" id="cell-6"></div>
+				<div class="cell" id="cell-7"></div>
+				<div class="cell" id="cell-8"></div>
+			</div>
+		</div>
+		<div class="game-info">
+			<p id="game-status">Game in progress</p>
+			<button id="reset-btn">Reset Game</button>
+		</div>
+	</div>
+
+	<script>
+		let gameBoard = [];
+		let currentPlayer = "X";
+		let gameOver = false;
+
+		for (let i = 0; i < 9; i++) {
+			gameBoard.push("");
+		}
+
+		document.querySelectorAll(".cell").forEach((cell, index) => {
+			cell.addEventListener("click", () => {
+				if (!gameOver && gameBoard[index] === "") {
+					gameBoard[index] = currentPlayer;
+					cell.textContent = currentPlayer;
+					checkWin();
+					switchPlayer();
+				}
+			});
+		});
+
+		document.getElementById("reset-btn").addEventListener("click", resetGame);
+
+		function checkWin() {
+			const winConditions = [
+				[0, 1, 2],
+				[3, 4, 5],
+				[6, 7, 8],
+				[0, 3, 6],
+				[1, 4, 7],
+				[2, 5, 8],
+				[0, 4, 8],
+				[2, 4, 6]
+			];
+
+			for (let i = 0; i < winConditions.length; i++) {
+				const condition = winConditions[i];
+				if (
+					gameBoard[condition[0]] === currentPlayer &&
+					gameBoard[condition[1]] === currentPlayer &&
+					gameBoard[condition[2]] === currentPlayer
+				) {
+					gameOver = true;
+					document.getElementById("game-status").textContent = Player ${currentPlayer} wins!;
+					return;
+				}
+			}
+
+			if (!gameBoard.includes("")) {
+				gameOver = true;
+				document.getElementById("game-status").textContent = "It's a draw!";
+			}
+		}
+
+		function switchPlayer() {
+			currentPlayer = currentPlayer === "X" ? "O" : "X";
+		}
+
+		function resetGame() {
+			gameBoard = [];
+			gameOver = false;
+			currentPlayer = "X";
+			document.querySelectorAll(".cell").forEach((cell) => {
+				cell.textContent = "";
+			});
+			document.getElementById("game-status").textContent = "Game in progress";
+		}
+	</script>
+</body>
+</
