@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #location-input {
+            margin-bottom: 20px;
+        }
+
+        #location-input input {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        #location-input button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #location-input button:hover {
+            background-color: #3e8e41;
+        }
+
+        #weather-data {
+            margin-top: 20px;
+        }
+
+        #weather-data h2 {
+            margin-top: 0;
+        }
+
+        #weather-data p {
+            margin-bottom: 10px;
+        }
+
+        #weather-condition-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #weather-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        #forecast {
+            margin-top: 20px;
+        }
+
+        #forecast-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .forecast-item {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 150px;
+        }
+
+        .forecast-item h3 {
+            margin-top: 0;
+        }
+
+        .forecast-item p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Weather App</h1>
+    </header>
+    <main>
+        <section id="location-input">
+            <input type="text" id="location" placeholder="Enter a location">
+            <button id="get-weather">Get Weather</button>
+        </section>
+        <section id="weather-data">
+            <h2 id="location-name"></h2>
+            <div id="weather-condition-container">
+                <img id="weather-icon" src="" alt="Weather Icon">
+                <p id="weather-condition"></p>
+            </div>
+            <p id="temperature"></p>
+            <p id="humidity"></p>
+            <p id="wind-speed"></p>
+            <p id="uv-index"></p>
+            <p id="sunrise"></p>
+            <p id="sunset"></p>
+        </section>
+        <section id="forecast">
+            <h2>5-Day Forecast</h2>
+            <div id="forecast-container">
+                <!-- forecast data will be rendered here -->
+            </div>
+        </section>
+    </main>
+    <script>
+        const apiKey = "YOUR_API_KEY_HERE";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather";
+        const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast";
+
+        const locationInput = document.getElementById("location");
+        const getWeatherButton = document.getElementById("get-weather");
+        const locationNameElement = document.getElementById("location-name");
+        const weatherConditionElement = document.getElementById("weather-condition");
+        const weatherIconElement = document.getElementById("weather-icon");
+        const temperatureElement = document.getElementById("temperature");
+        const humidityElement = document.getElementById("humidity");
+        const windSpeedElement = document.getElementById("wind-speed");
+        const uvIndexElement = document.getElementById("uv-index");
+        const sunriseElement = document.getElementById("sunrise");
+        const sunsetElement = document.getElementById("sunset");
+        const forecastContainer = document.getElementById("forecast-container");
+
+        getWeatherButton.addEventListener("click", getWeather);
+
+        function getWeather() {
+            const location = locationInput.value.trim();
+            if (location) {
+                fetch(${apiUrl}?q=${location}&appid=${apiKey})
+                    .then(response => response.json())
+                    .then(data => {
+                        const weatherData = data.weather[0];
+                        locationNameElement.textContent = data.name;
+                        weatherConditionElement.textContent = Weather: ${weatherData.main};
+                        weatherIconElement.src = `http://
